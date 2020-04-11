@@ -13,17 +13,17 @@
 
 4. Instalar Monaca CLI: https://monaca.io/cli.html
 
-4.1 ## npm install -g monaca
+## 4.1  npm install -g monaca
 
 5. Desde una terminal ir a la ruta donde se creará el proyecto
 
-5.1 ## monaca login
+5.1 monaca login
 
-5.2 ## monaca create "nombre_del_proyeto"
+5.2 monaca create "nombre_del_proyeto"
 
-5.3 Seleccionar el Framework a usar, en este caso ## Javascript
+5.3 Seleccionar el Framework a usar, en este caso: Javascript
 
-5.4 Seleccionar la plantila, en este caso ## Tabbar
+5.4 Seleccionar la plantila, en este caso: Tabbar
 
 5.5 Editar el index.html, que se encuentra en: ruta_del_proyecto/www/index.html
 
