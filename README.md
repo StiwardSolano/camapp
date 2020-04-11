@@ -1,7 +1,7 @@
 # camapp
  Android app example using Monaca & Onsen UI, uses device.camera
 
-![alt text](https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png)
+<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="40%"></img>
  
 ## Getting Started
 
