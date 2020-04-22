@@ -4,7 +4,7 @@
 <img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="30%"></img>
 > Tab1
 
-<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/webServ.png" width="30%"></img>
+<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/webServ.png" width="30%"></img>
 > Tab2, Ahora con Unsplash API!!!
  
 ## Getting Started
