@@ -1,10 +1,10 @@
 # camapp
  Android app example using Monaca & Onsen UI, uses device.camera
 
-<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="40%"></img>
+<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="30%"></img>
 > Tab1
 
-![](https://github.com/StiwardSolano/camapp/blob/master/res/electron/webServ.png)
+<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/webServ.png" width="30%"></img>
 > Tab2, Ahora con Unsplash API!!!
  
 ## Getting Started
