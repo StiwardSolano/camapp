@@ -18,6 +18,8 @@
       document.addEventListener("deviceready", onDeviceReady, false);
       function onDeviceReady() {
           console.log(navigator.device.capture);
+          var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+          db.transaction(populateDB, errorCB, successCB);
       }
     });
 
@@ -106,6 +108,70 @@
     }
   </script>
 
+  <script>
+    var currentRow;
+
+    function populateDB(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS DEMO (id INTEGER PRIMARY KEY AUTOINCREMENT, name,number)');
+        console.log(tx);
+    }
+
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+    }
+
+    function searchQueryDB(tx) {
+        tx.executeSql("SELECT * FROM DEMO where name like ('%"+ document.getElementById("txtName").value + "%')",
+                [], querySuccess, errorCB);
+    }
+
+    function querySuccess(tx, results) {
+        var tblText='<table id="t01"><tr><th>ID</th> <th>Nombre</th> <th>Numero Socio</th></tr>';
+        var len = results.rows.length;
+        for (var i = 0; i < len; i++) {
+            var tmpArgs=results.rows.item(i).id + ",'" + results.rows.item(i).name
+                    + "','" + results.rows.item(i).number+"'";
+            tblText +='<tr onclick="goPopup('+ tmpArgs + ');"><td>' + results.rows.item(i).id +'</td><td>'
+                    + results.rows.item(i).name +'</td><td>' + results.rows.item(i).number +'</td></tr>';
+        }
+        tblText +="</table>";
+        document.getElementById("tblDiv").innerHTML =tblText;
+    }
+
+    function deleteRow(tx) {
+      tx.executeSql('DELETE FROM DEMO WHERE id = ' + currentRow, [], queryDB, errorCB);
+    }
+
+    function errorCB(err) {
+        alert("Error processing SQL: "+err.code);
+        console.log("Error processing SQL: "+err.code);
+    }
+
+    function successCB() {
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+    function insertDB(tx) {
+        tx.executeSql('INSERT INTO DEMO (name,number) VALUES ("' +document.getElementById("txtName").value
+                +'","'+document.getElementById("txtNumber").value+'")');
+    }
+
+    function goInsert() {
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(insertDB, errorCB, successCB);
+    }
+
+    function goDelete() {
+          var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+          db.transaction(deleteRow, errorCB);
+    }
+
+    function goPopup(row,rowname,rownum) {
+        currentRow=row;
+    }
+  </script>
+
 </head>
 <body>
   <ons-page id="cams">
@@ -113,9 +179,11 @@
       <div class="center" id="toolbar-title"></div>
     </ons-toolbar>
     <ons-tabbar position="auto">
-      <ons-tab label="Tab 1" page="tab1.html" active>
+      <ons-tab label="Tab 1" page="tab1.html">
       </ons-tab>
       <ons-tab label="Tab 2" page="tab2.html">
+      </ons-tab>
+      <ons-tab label="Tab 3" page="tab3.html" active>
       </ons-tab>
     </ons-tabbar>
   </ons-page>
@@ -155,6 +223,27 @@
             height="70%">
         </img>
       </p>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="tab3.html">
+    <ons-page id="third-page">
+      <p style="text-align: center;">
+        SQLite Ejemplo
+        <br/><br/>
+      </p>
+      <div>
+        <hr/>
+        Nombre: <input type="text" placeholder="Stiward" id="txtName"><br/>
+        Numero Socio: <input type="text" placeholder="123" id="txtNumber"><hr/>
+      </div>
+      <div id="tblDiv"></div>
+      <hr/>
+      <div style="text-align: center">
+          <ons-button onclick="goInsert()">Guardar</ons-button>
+          <ons-button onclick="goDelete()">Eliminar</ons-button>
+          <ons-button onclick="successCB()">Mostar</ons-button>
+      </div>
     </ons-page>
   </ons-template>
 </body>
