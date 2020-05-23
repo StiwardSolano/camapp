@@ -1,7 +1,8 @@
 # camapp
  Android app example using Monaca & Onsen UI, uses device.camera
  
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg) ![](https://img.shields.io/github/issues/pandao/editor.md.svg) ![]
+[![GitHub issues](https://img.shields.io/github/issues/StiwardSolano/camapp)](https://github.com/StiwardSolano/camapp/issues)
+[![GitHub license](https://img.shields.io/github/license/StiwardSolano/camapp)](https://github.com/StiwardSolano/camapp/blob/master/LICENSE)
 
 <img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="30%"></img>
 > Tab1
