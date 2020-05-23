@@ -1,11 +1,17 @@
 # camapp
  Android app example using Monaca & Onsen UI, uses device.camera
+ 
+[![GitHub issues](https://img.shields.io/github/issues/StiwardSolano/camapp)](https://github.com/StiwardSolano/camapp/issues)
+[![GitHub license](https://img.shields.io/github/license/StiwardSolano/camapp)](https://github.com/StiwardSolano/camapp/blob/master/LICENSE)
 
 <img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/main_screen.png" width="30%"></img>
 > Tab1
 
 <img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/webServ.png" width="30%"></img>
 > Tab2, Ahora con Unsplash API!!!
+
+<img src="https://github.com/StiwardSolano/camapp/blob/master/res/electron/screen/sqlite.png" width="30%"></img>
+> Tab3, Con SQLite!!!
  
 ## Getting Started
 
