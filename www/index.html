@@ -6,6 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="media-src * gap:; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data: blob: android-webview-video-poster:; style-src * 'unsafe-inline';">
   <script src="components/loader.js"></script>
   <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCcmmIoNlaK5-lx3Z75xfH2eg8I4MKgAVE" async defer></script>
 
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
@@ -20,6 +21,8 @@
           console.log(navigator.device.capture);
           var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
           db.transaction(populateDB, errorCB, successCB);
+
+          document.getElementById("getPosition").addEventListener("click", getPosition);
       }
     });
 
@@ -172,6 +175,100 @@
     }
   </script>
 
+  <script>
+    var Latitude = undefined;
+    var Longitude = undefined;
+    var pointA = undefined;
+    var pointB = undefined;
+    var labelus = 'B';
+
+    function getPosition() {
+      var options = {
+          enableHighAccuracy: true,
+          maximumAge: 3600000
+      }
+      var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+      function onSuccess(position) {
+        Latitude = position.coords.latitude;
+        Longitude = position.coords.longitude;
+        getMap(Latitude, Longitude);
+      };
+
+      function onError(error) {
+          alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+      }
+    }
+
+    function getMap(latitude, longitude) {
+      var mapOptions = {
+          center: new google.maps.LatLng(0, 0),
+          zoom: 1,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+      map = new google.maps.Map
+      (document.getElementById("map-canvas"), mapOptions);
+
+      var latLong = new google.maps.LatLng(latitude, longitude);
+      pointA = latLong;
+
+      var marker = new google.maps.Marker({
+          position: latLong
+      });
+
+      google.maps.event.addListener(map, 'click', function(event) {
+      addMarker(event.latLng, map);
+      pointB = event.latLng;
+      });
+
+      // Adds a marker to the map.
+      function addMarker(location, map) {
+        // Add the marker at the clicked location, and add the next-available label
+        // from the array of alphabetical characters.
+        var marker2 = new google.maps.Marker({
+          position: location,
+          label: labelus,
+          map: map
+        });
+        
+        let directionsService = new google.maps.DirectionsService();
+        let directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map); // Existing map object displays directions
+        // Create route from existing points used for markers
+        const route = {
+            origin: marker.getPosition(),
+            destination: marker2.getPosition(),
+            travelMode: 'DRIVING'
+        }
+
+        directionsService.route(route,
+          function(response, status) { // anonymous function to capture directions
+            if (status !== 'OK') {
+              alert('Directions request failed due to ' + status);
+              return;
+            } else {
+              directionsRenderer.setDirections(response); // Add route to the map
+              var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+              if (!directionsData) {
+                alert('Directions request failed');
+                return;
+              }
+              else {
+                alert(" Distancia en auto: " + directionsData.distance.text + " (" + directionsData.duration.text + ").");
+              }
+            }
+          });
+        }
+
+      marker.setMap(map);
+      map.setZoom(15);
+      map.setCenter(marker.getPosition());
+
+    }
+
+  </script>
+
 </head>
 <body>
   <ons-page id="cams">
@@ -183,7 +280,9 @@
       </ons-tab>
       <ons-tab label="Tab 2" page="tab2.html">
       </ons-tab>
-      <ons-tab label="Tab 3" page="tab3.html" active>
+      <ons-tab label="Tab 3" page="tab3.html">
+      </ons-tab>
+      <ons-tab label="Tab 4" page="tab4.html" active>
       </ons-tab>
     </ons-tabbar>
   </ons-page>
@@ -243,6 +342,17 @@
           <ons-button onclick="goInsert()">Guardar</ons-button>
           <ons-button onclick="goDelete()">Eliminar</ons-button>
           <ons-button onclick="successCB()">Mostar</ons-button>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="tab4.html">
+    <ons-page id="second-page">
+      <p style="text-align: center;">
+        Ejemplo maps
+      </p>
+      <div id="map-canvas">
+        <button id="getPosition">Mapa</button>
       </div>
     </ons-page>
   </ons-template>
